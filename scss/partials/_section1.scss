@@ -6,17 +6,10 @@ body {
 
 .sectionOne {
     height: 100vh;
-    //background: #000;
+    background: #000;
     position: relative;
     background-size: cover;
     overflow: hidden;
-    
-    
-            background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-position: center;
-        background-image: url("../BSP_054.jpg");
-    
     .photo {
         list-style: none;
         top: 0;
@@ -24,6 +17,12 @@ body {
         position: absolute;
         height: 301vh;
         width: 100%;
+        li {
+            float: left;
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+        }
         @media (min-width: 600px) {
             height: 300vh;
             width: 100%;

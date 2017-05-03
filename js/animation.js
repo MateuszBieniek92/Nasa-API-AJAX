@@ -1,22 +1,27 @@
 $(function () {
 
-    /// btn menu mobile    
+    ///media queries
 
     var mobile = window.matchMedia("screen and (max-width: 550px)");
     var desktop = window.matchMedia("screen and (min-width: 900px)");
     var tablet = window.matchMedia("screen and (min-width: 551px) and (max-width: 899px)");
-    var $btn1 = $('.showHideMenu');
-    var $list = $('.menu');
-    
+
+    /// nasa parameters
+
+    var nasaUrl = 'https://api.nasa.gov/planetary/apod?api_key=YJxJW0IUSKxKADo5NqCyWhDkKWnchFkXGm06sTfW&date=';
     var $photoUl = $('.photo');
     var $btnLeft = $('.btnLeft');
     var $btnRight = $('.btnRight');
 
 
+    function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
     function getRandomDate() {
-        var year = getRandomInt(2010, 2016);
-        var month = getRandomInt(1, 12);
-        var day = getRandomInt(1, 28);
+        var year = randomInt(2005, 2016);
+        var month = randomInt(1, 12);
+        var day = randomInt(1, 28);
 
         return year + '-' + month + '-' + day;
     }
@@ -24,38 +29,36 @@ $(function () {
     /// ajax
     function loadImage(type) {
         $.ajax({
-            url: 'https://api.nasa.gov/planetary/apod?api_key=YJxJW0IUSKxKADo5NqCyWhDkKWnchFkXGm06sTfW' + getRandomDate()
+            url: nasaUrl + getRandomDate()
         }).done(function (response) {
             console.log(response, type);
             var url = response.hdurl;
-            if (typeof url !== 'undefined' && response.media_type === 'image') {
-                var $image = $('<img>').attr('src', url);
-                $image
-                    .on('load', function () {
-                        console.log('image load');
-
-                        $loader.hide();
-                        createImageElement(type, url);
-                    })
-                    .on('error', function () {
-                        console.log('error!');
-                        error++;
-                        if (error > 5) {
-                            alert('Nie mogę pobrać zdjęć');
-                        } else {
-                            setTimeout(function () {
-                                loadImage(type);
-                            }, 1000)
-                        }
-                    });
-
-            } else {
-                loadImage(type);
-            }
-            //console.log(response);
+            var $image = $('<img>').attr('src', url);
+            $image
+                .on('load', function () {
+                    console.log('zdjęcie pobrane');
+                    createImage( url);
+                })
+                .on('error', function () {
+                    console.log('error!');
+                    error++;
+                    if (error > 5) {
+                        alert('Nie moge pobrać zdjęć');
+                    }
+                });
         }).fail(function () {
             alert('Brak połączenia z API NASA');
         });
     }
+
+    function createImage(url) {
+        var $li = $('<li>').
+        css({
+            'background-image': 'url(' + url + ')'
+        });
+        $photoUl.append($li);
+    }
+
+        loadImage();
 
 });
