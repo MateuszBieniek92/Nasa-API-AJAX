@@ -26,6 +26,49 @@ $(function () {
         return year + '-' + month + '-' + day;
     }
 
+    function slide() {
+
+        $array.eq($position).css('opacity', 0);
+        $('.visible').animate({
+            opacity: 0
+        }, 2000, function () {
+            $(this).removeClass('visible');
+            $array.eq($position).addClass('visible').animate({
+                opacity: 1
+            }, 500);
+        })
+    }
+
+    var $array = $photoUl.find('li');
+    var $position = $array.index($('.visible'));
+    var $arrayLength = $array.length;
+    console.log($arrayLength);
+    console.log('tablica: ' + $array);
+    $position = 0;
+
+    function rightButton() {
+        $btnRight
+            .on('click', function () {
+                $position += 1;
+                start('next');
+                slide();
+                console.log($position);
+            })
+
+    };
+
+    function leftButton() { /// do zrobienia 
+        $btnLeft
+            .on('click', function () {
+                $position --;
+                //createImage('next');
+                start('prev');
+                slide();
+                console.log($position);
+            })
+
+    };
+
     /// ajax
     function loadImage(type) {
         $.ajax({
@@ -37,7 +80,7 @@ $(function () {
             $image
                 .on('load', function () {
                     console.log('zdjęcie pobrane');
-                    createImage( url);
+                    createImage(type, url);
                 })
                 .on('error', function () {
                     console.log('error!');
@@ -51,14 +94,68 @@ $(function () {
         });
     }
 
-    function createImage(url) {
-        var $li = $('<li>').
-        css({
+    function createImage(type, url) {
+        var $li = $('<li>').css({
             'background-image': 'url(' + url + ')'
         });
-        $photoUl.append($li);
-    }
+        if (typeof type === 'undefined') {
+            type = 'init';
+        }
 
-        loadImage();
+        if (type === 'init') {
+            $photoUl.append($li)
+            $li.addClass('visible');
+        } else if (type === 'next') {
+            $photoUl.append($li);
+            $li.addClass('visible');
+        } else if (type === 'prev') {
+            $photoUl.prepend($li);
+            //$li.addClass('visible');
+
+        }
+    };
+
+    function start(type) {
+
+        if (typeof type === 'undefined') {
+            type = 'init';
+        }
+
+        var $li = $photoUl.find('li');
+        console.log($li.length);
+        if ( $position >= $li.length ) {
+            if ($position < 0) {
+                $position = 0;
+            }
+            loadImage(type);
+        } else {
+            animateImageElement(type)
+            //createImage(type);
+        }
+    };
+   
+//type === 'init' || || $position < 0
+
+    var $galleryUl = $('.gallery');
+
+    function createGalleryImage(type, url) {
+        if (mobile.matches) {
+            var $li = $('<li>').css('display', 'flex').css('flex-direction', 'column').css('border', '2px solid green').css('width', '100vw');
+        } else if (desktop.matches) {
+            var $li = $('<li>').css('display', 'flex').css('flex-direction', 'row').css('border', '2px solid green').css('width', '33.333vw');
+            //.css({'background-image': 'url(' + url + ')'
+            //});
+        }
+        $galleryUl.append($li);
+    };
+    
+    
+    
+    createGalleryImage();
+     start();
+    rightButton();
+    leftButton();
+
+
 
 });
