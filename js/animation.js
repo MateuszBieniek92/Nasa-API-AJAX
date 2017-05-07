@@ -9,10 +9,20 @@ $(function () {
     /// nasa parameters
 
     var nasaUrl = 'https://api.nasa.gov/planetary/apod?api_key=YJxJW0IUSKxKADo5NqCyWhDkKWnchFkXGm06sTfW&date=';
+
     var $photoUl = $('.photo');
     var $btnLeft = $('.btnLeft');
     var $btnRight = $('.btnRight');
+    var $sectionOne = $('.sectionOne');
 
+    var sectionOneWidth;
+    setSectionOneWidth();
+    var $array = $photoUl.find('li');
+    var $position = $array.index($('.visible'));
+    var $arrayLength = $array.length;
+    console.log($arrayLength);
+    console.log('tablica: ' + $array);
+    $position = 0;
 
     function randomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -26,8 +36,12 @@ $(function () {
         return year + '-' + month + '-' + day;
     }
 
-    function slide() {
+    function setSectionOneWidth() {
+        $sectionOne.width();
+    }
 
+
+    function slide() {
         $array.eq($position).css('opacity', 0);
         $('.visible').animate({
             opacity: 0
@@ -38,13 +52,6 @@ $(function () {
             }, 500);
         })
     }
-
-    var $array = $photoUl.find('li');
-    var $position = $array.index($('.visible'));
-    var $arrayLength = $array.length;
-    console.log($arrayLength);
-    console.log('tablica: ' + $array);
-    $position = 0;
 
     function rightButton() {
         $btnRight
@@ -60,9 +67,8 @@ $(function () {
     function leftButton() { /// do zrobienia 
         $btnLeft
             .on('click', function () {
-                $position --;
-                //createImage('next');
-                start('prev');
+                $position += 1;
+                start('next');
                 slide();
                 console.log($position);
             })
@@ -98,9 +104,9 @@ $(function () {
         var $li = $('<li>').css({
             'background-image': 'url(' + url + ')'
         });
-        if (typeof type === 'undefined') {
-            type = 'init';
-        }
+        //        if (typeof type === 'undefined') {
+        //            type = 'init';
+        //        }
 
         if (type === 'init') {
             $photoUl.append($li)
@@ -110,7 +116,8 @@ $(function () {
             $li.addClass('visible');
         } else if (type === 'prev') {
             $photoUl.prepend($li);
-            //$li.addClass('visible');
+            $photoUl.css('left', -(($position + 1) * sectionOneWidth) + 'px')
+                //$li.addClass('visible').css('opacity', '1');
 
         }
     };
@@ -123,18 +130,21 @@ $(function () {
 
         var $li = $photoUl.find('li');
         console.log($li.length);
-        if ( $position >= $li.length ) {
+        if ($position >= $li.length) {
             if ($position < 0) {
                 $position = 0;
             }
             loadImage(type);
         } else {
-            animateImageElement(type)
-            //createImage(type);
+            createImage(type);
         }
+
     };
-   
-//type === 'init' || || $position < 0
+
+
+
+
+    // section 2
 
     var $galleryUl = $('.gallery');
 
@@ -148,11 +158,11 @@ $(function () {
         }
         $galleryUl.append($li);
     };
-    
-    
-    
+
+
+
     createGalleryImage();
-     start();
+    start();
     rightButton();
     leftButton();
 
