@@ -10,6 +10,8 @@ $(function () {
 
     var nasaUrl = 'https://api.nasa.gov/planetary/apod?api_key=YJxJW0IUSKxKADo5NqCyWhDkKWnchFkXGm06sTfW&date=';
 
+    var marsUrl = 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2016-6-3&api_key=YJxJW0IUSKxKADo5NqCyWhDkKWnchFkXGm06sTfW';
+
     var $photoUl = $('.photo');
     var $btnLeft = $('.btnLeft');
     var $btnRight = $('.btnRight');
@@ -56,39 +58,39 @@ $(function () {
     function rightButton() {
         var widthNext = $btnRight.outerWidth();
         $btnRight
-        
+
             .on('mouseenter', function () {
                 $(this).stop().animate({
-                   right: 35 + 'px'
+                    right: 35 + 'px'
                 }, time);
             })
             .on('mouseout', function () {
                 $(this).stop().animate({
-                   right:  -20 + 'px'
+                    right: -20 + 'px'
                 }, time);
             })
             .on('click', function () {
-            $position += 1;
-            start('next');
-            slide();
-            console.log($position);
-        })
+                $position += 1;
+                start('next');
+                slide();
+                console.log($position);
+            })
 
     };
 
-    function leftButton() { 
+    function leftButton() {
         var widthPrev = $btnLeft.outerWidth();
         time = 500;
         $btnLeft
 
             .on('mouseenter', function () {
                 $(this).stop().animate({
-                   left: 35 + 'px'
+                    left: 35 + 'px'
                 }, time);
             })
             .on('mouseout', function () {
                 $(this).stop().animate({
-                   left:  -20 + 'px'
+                    left: -20 + 'px'
                 }, time);
             })
             .on('click', function () {
@@ -100,7 +102,7 @@ $(function () {
 
         console.log(widthPrev);
     };
-    
+
 
     /// ajax
     function loadImage(type) {
@@ -168,31 +170,52 @@ $(function () {
 
     };
 
-
-
-
     // section 2
 
     var $galleryUl = $('.gallery');
 
-    function createGalleryImage(type, url) {
+    function loadMarsImage(type) {
+        $.ajax({
+            url: marsUrl
+        }).done(function (response) {
+            console.log(response, type);
+            var url = response.photos;
+            createGalleryImage(response.photos);
+            var $image = $('<img>').attr('src', url.img_src);
+            $image
+                .on('error', function () {
+                    console.log('error!');
+                    error++;
+                    if (error > 5) {
+                        alert('Nie moge pobrać zdjęć');
+                    }
+                });
+        }).fail(function () {
+            alert('Brak połączenia z API NASA');
+        });
+    }
+
+    function createGalleryImage(response) {
+        $.each(response, function (index, url) {
         if (mobile.matches) {
-            var $li = $('<li>').css('display', 'flex').css('flex-direction', 'column').css('border', '2px solid green').css('width', '100vw');
+            var $li = $('<li>').css('display', 'flex').css('flex-direction', 'column').css('width', '100vw').css({
+                'background-image': 'url(' + url.img_src + ')'
+            });
         } else if (desktop.matches) {
-            var $li = $('<li>').css('display', 'flex').css('flex-direction', 'row').css('border', '2px solid green').css('width', '33.333vw');
-            //.css({'background-image': 'url(' + url + ')'
-            //});
+            var $li = $('<li>').css('display', 'flex').css('flex-direction', 'row').css('width', '33.3vw').css({
+                'background-image': 'url(' + url.img_src + ')'
+            });
+
         }
-        $galleryUl.append($li);
+             $galleryUl.append($li);
+        })
     };
 
 
-
-    createGalleryImage();
     start();
     rightButton();
     leftButton();
-
+    loadMarsImage();
 
 
 });
