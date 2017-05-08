@@ -17,7 +17,8 @@ $(function () {
     var $btnRight = $('.btnRight');
     var $nasaText = $('.text');
     var $sectionOne = $('.sectionOne');
-    
+    var $btnScroll = $('.btnBottom');
+
     /// loader divs
     var $loadBackground = $('<div class="load">');
     var $loaderContainer = $('<div class="loaderContainer">');
@@ -28,9 +29,34 @@ $(function () {
     var $position = $array.index($('.visible'));
     var $arrayLength = $array.length;
 
+    // section 2
+    var $galleryUl = $('.gallery');
+
+
     console.log($arrayLength);
     console.log('tablica: ' + $array);
     $position = 0;
+
+    // scroll btn 
+    $(window).on('scroll', function () {
+        var pix = $(document).scrollTop();
+        // console.log(pix);
+        $btnScroll.show();
+        if (pix !== 0) {
+            $btnScroll.hide();
+            
+        }
+    });
+
+    $btnScroll.on('click', function () {
+        $('html, body').animate({
+            scrollTop: 872
+        }, 2000);
+    });
+
+
+
+    //functions 
 
     function randomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -47,7 +73,6 @@ $(function () {
     function setSectionOneWidth() {
         $sectionOne.width();
     }
-
 
     function slide() {
         initLoader();
@@ -101,14 +126,12 @@ $(function () {
                     opacity: 0
                 }, 500);
             })
-
     };
 
     function leftButton() {
         var widthPrev = $btnLeft.outerWidth();
         time = 500;
         $btnLeft
-
             .on('mouseenter', function () {
                 $(this).stop().animate({
                     left: 35 + 'px'
@@ -128,10 +151,8 @@ $(function () {
                     opacity: 0
                 }, 500);
             })
-
         console.log(widthPrev);
     };
-
 
     /// ajax
     function loadImage(type) {
@@ -198,8 +219,6 @@ $(function () {
     };
 
     // section 2
-
-    var $galleryUl = $('.gallery');
 
     function loadMarsImage(type) {
         $.ajax({
