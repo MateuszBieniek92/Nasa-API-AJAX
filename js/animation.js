@@ -54,18 +54,43 @@ $(function () {
     }
 
     function rightButton() {
+        var widthNext = $btnRight.outerWidth();
         $btnRight
-            .on('click', function () {
-                $position += 1;
-                start('next');
-                slide();
-                console.log($position);
+        
+            .on('mouseenter', function () {
+                $(this).stop().animate({
+                   right: 35 + 'px'
+                }, time);
             })
+            .on('mouseout', function () {
+                $(this).stop().animate({
+                   right:  -20 + 'px'
+                }, time);
+            })
+            .on('click', function () {
+            $position += 1;
+            start('next');
+            slide();
+            console.log($position);
+        })
 
     };
 
-    function leftButton() { /// do zrobienia 
+    function leftButton() { 
+        var widthPrev = $btnLeft.outerWidth();
+        time = 500;
         $btnLeft
+
+            .on('mouseenter', function () {
+                $(this).stop().animate({
+                   left: 35 + 'px'
+                }, time);
+            })
+            .on('mouseout', function () {
+                $(this).stop().animate({
+                   left:  -20 + 'px'
+                }, time);
+            })
             .on('click', function () {
                 $position += 1;
                 start('next');
@@ -73,7 +98,9 @@ $(function () {
                 console.log($position);
             })
 
+        console.log(widthPrev);
     };
+    
 
     /// ajax
     function loadImage(type) {
