@@ -141,6 +141,14 @@ body {
         border-left: 3em solid transparent;
         border-right: 3em solid transparent;
     }
+    .load {
+        width: 100vw;
+        height: 100vh;
+        background: white;
+        position: absolute;
+        z-index: 900;
+        opacity: 0.4;
+    }
 }
 
 .loaderContainer {
@@ -149,6 +157,7 @@ body {
     text-align: center;
     top: calc(50% - 45px);
     position: absolute;
+    z-index: 999;
 }
 
 .loader {
@@ -158,42 +167,26 @@ body {
     border: 6px double;
     border-radius: 50%;
     border-color: transparent rgba(255, 255, 255, 255.9) rgba(255, 255, 255, 0.9);
-    animation: cssload-spin 890ms infinite linear;
-    -o-animation: cssload-spin 890ms infinite linear;
-    -ms-animation: cssload-spin 890ms infinite linear;
-    -webkit-animation: cssload-spin 890ms infinite linear;
-    -moz-animation: cssload-spin 890ms infinite linear;
+    animation: load 890ms infinite linear;
+    -webkit-animation: load 890ms infinite linear;
+    -moz-animation: load 890ms infinite linear;
 }
 
-@keyframes cssload-spin {
+@keyframes load {
     100% {
         transform: rotate(360deg);
         transform: rotate(360deg);
     }
 }
 
-@-o-keyframes cssload-spin {
-    100% {
-        -o-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-
-@-ms-keyframes cssload-spin {
-    100% {
-        -ms-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-
-@-webkit-keyframes cssload-spin {
+@-webkit-keyframes load {
     100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
 }
 
-@-moz-keyframes cssload-spin {
+@-moz-keyframes load {
     100% {
         -moz-transform: rotate(360deg);
         transform: rotate(360deg);
@@ -206,7 +199,7 @@ body {
     position: relative;
     background-size: cover;
     overflow: hidden;
-    width: 100vw;
+    width: 99vw;
     .galleryText {
         margin-top: 15px;
         font-size: 60px;
@@ -226,7 +219,7 @@ body {
         li {
             float: left;
             content: '';
-            width: 33.333vw;
+            width: 33%;
             height: 50vh;
             background-size: cover;
         }

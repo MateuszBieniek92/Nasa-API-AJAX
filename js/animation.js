@@ -9,20 +9,25 @@ $(function () {
     /// nasa parameters
 
     var nasaUrl = 'https://api.nasa.gov/planetary/apod?api_key=YJxJW0IUSKxKADo5NqCyWhDkKWnchFkXGm06sTfW&date=';
-
     var marsUrl = 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2016-6-3&api_key=YJxJW0IUSKxKADo5NqCyWhDkKWnchFkXGm06sTfW';
 
+    /// section 1 btns
     var $photoUl = $('.photo');
     var $btnLeft = $('.btnLeft');
     var $btnRight = $('.btnRight');
     var $nasaText = $('.text');
     var $sectionOne = $('.sectionOne');
+    
+    /// loader divs
+    var $loadBackground = $('<div class="load">');
+    var $loaderContainer = $('<div class="loaderContainer">');
+    var $loader = $loaderContainer.append('<div class="loader">');
 
-    var sectionOneWidth;
-    setSectionOneWidth();
+    /// slider array and index
     var $array = $photoUl.find('li');
     var $position = $array.index($('.visible'));
     var $arrayLength = $array.length;
+
     console.log($arrayLength);
     console.log('tablica: ' + $array);
     $position = 0;
@@ -45,6 +50,7 @@ $(function () {
 
 
     function slide() {
+        initLoader();
         $array.eq($position).css('opacity', 0);
         $('.visible').animate({
             opacity: 0
@@ -52,8 +58,24 @@ $(function () {
             $(this).removeClass('visible');
             $array.eq($position).addClass('visible').animate({
                 opacity: 1
-            }, 500);
+            }, 2000);
         })
+    }
+
+    function initLoader() {
+        $sectionOne.append($loadBackground);
+        $sectionOne.append($loaderContainer);
+        $sectionOne.append($loader);
+        $loader.delay(500).fadeIn('slow');
+        $loadBackground.delay(500).fadeIn('slow');
+    }
+
+    function stopLoader() {
+        $sectionOne.prepend($loadBackground);
+        $sectionOne.prepend($loaderContainer);
+        $sectionOne.prepend($loader);
+        $loader.fadeOut("slow");
+        $loadBackground.fadeOut("slow");
     }
 
     function rightButton() {
@@ -75,6 +97,9 @@ $(function () {
                 start('next');
                 slide();
                 console.log($position);
+                $nasaText.addClass('visible').animate({
+                    opacity: 0
+                }, 500);
             })
 
     };
@@ -99,6 +124,9 @@ $(function () {
                 start('next');
                 slide();
                 console.log($position);
+                $nasaText.addClass('visible').animate({
+                    opacity: 0
+                }, 500);
             })
 
         console.log(widthPrev);
@@ -117,6 +145,10 @@ $(function () {
                 .on('load', function () {
                     console.log('zdjęcie pobrane');
                     createImage(type, url);
+                    $nasaText.addClass('visible').animate({
+                        opacity: 1
+                    }, 500);
+                    stopLoader();
                 })
                 .on('error', function () {
                     console.log('error!');
@@ -134,12 +166,8 @@ $(function () {
         var $li = $('<li>').css({
             'background-image': 'url(' + url + ')'
         });
-        //        if (typeof type === 'undefined') {
-        //            type = 'init';
-        //        }
-
         if (type === 'init') {
-            $photoUl.append($li)
+            $photoUl.append($li);
             $li.addClass('visible');
         } else if (type === 'next') {
             $photoUl.append($li);
@@ -147,8 +175,6 @@ $(function () {
         } else if (type === 'prev') {
             $photoUl.prepend($li);
             $photoUl.css('left', -(($position + 1) * sectionOneWidth) + 'px')
-                //$li.addClass('visible').css('opacity', '1');
-
         }
     };
 
@@ -198,22 +224,22 @@ $(function () {
 
     function createGalleryImage(response) {
         $.each(response, function (index, url) {
-        if (mobile.matches) {
-            var $li = $('<li>').css('display', 'flex').css('flex-direction', 'column').css('width', '100vw').css({
-                'background-image': 'url(' + url.img_src + ')'
-            });
-        } else if (desktop.matches) {
-            var $li = $('<li>').css('display', 'flex').css('flex-direction', 'row').css('width', '33.3vw').css({
-                'background-image': 'url(' + url.img_src + ')'
-            });
+            if (mobile.matches) {
+                var $li = $('<li>').css('display', 'flex').css('flex-direction', 'column').css('width', '100vw').css({
+                    'background-image': 'url(' + url.img_src + ')'
+                });
+            } else if (desktop.matches) {
+                var $li = $('<li>').css('display', 'flex').css('flex-direction', 'row').css('width', '33vw').css({
+                    'background-image': 'url(' + url.img_src + ')'
+                });
 
-        }
-             $galleryUl.append($li);
+            }
+            $galleryUl.append($li);
         })
-        
+
     };
 
-
+    setSectionOneWidth();
     start();
     rightButton();
     leftButton();
