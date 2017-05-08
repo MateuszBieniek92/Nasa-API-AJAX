@@ -15,6 +15,7 @@ $(function () {
     var $photoUl = $('.photo');
     var $btnLeft = $('.btnLeft');
     var $btnRight = $('.btnRight');
+    var $nasaText = $('.text');
     var $sectionOne = $('.sectionOne');
 
     var sectionOneWidth;
@@ -209,6 +210,7 @@ $(function () {
         }
              $galleryUl.append($li);
         })
+        
     };
 
 

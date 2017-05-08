@@ -102,35 +102,119 @@ body {
         border-right: 3em solid transparent;
     }
     .btnLeft:hover,
-    .btnRight:hover {
+    .btnRight:hover,
+    .btnBottom:hover {
         border-bottom-color: rgba(255, 255, 255, 0.8);
     }
     .btnLeft:hover:before,
-    .btnRight:hover:before {
+    .btnRight:hover:before,
+    {
         border-top: 5em solid rgba(255, 255, 255, 0.8);
     }
-}
-.loader {
-    border: 8px solid white; /* Light grey */
-    border-top: 8px solid red; 
-    border-top-radius: 15%;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 2s linear infinite;
+    .btnBottom {
+        font-size: 10px;
+        width: 0;
+        border-left: 3em solid transparent;
+        border-right: 3em solid transparent;
+        border-bottom: 2em solid rgba(255, 255, 255, 0.6);
+        margin: 30px auto 0;
+        top: calc(50% - 50px);
+        left: -20px;
+        transform: rotate(90deg);
+        position: absolute;
+        cursor: pointer;
+        span {
+            color: white;
+            font-size: 25px;
+            position: absolute;
+            transform: rotate(-90deg);
+            margin: 15px calc(50% - 7px);
+        }
+    }
+    .btnBottom:before {
+        content: '';
+        position: absolute;
+        left: -2.9em;
+        top: 2em;
+        width: 0;
+        border-top: 5em solid rgba(255, 255, 255, 0.6);
+        border-left: 3em solid transparent;
+        border-right: 3em solid transparent;
+    }
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.loaderContainer {
+    width: 100%;
+    height: 41px;
+    text-align: center;
+    top: calc(50% - 45px);
+    position: absolute;
 }
+
+.loader {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    border: 6px double;
+    border-radius: 50%;
+    border-color: transparent rgba(255, 255, 255, 255.9) rgba(255, 255, 255, 0.9);
+    animation: cssload-spin 890ms infinite linear;
+    -o-animation: cssload-spin 890ms infinite linear;
+    -ms-animation: cssload-spin 890ms infinite linear;
+    -webkit-animation: cssload-spin 890ms infinite linear;
+    -moz-animation: cssload-spin 890ms infinite linear;
+}
+
+@keyframes cssload-spin {
+    100% {
+        transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@-o-keyframes cssload-spin {
+    100% {
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@-ms-keyframes cssload-spin {
+    100% {
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes cssload-spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes cssload-spin {
+    100% {
+        -moz-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
 .sectionTwo {
-    height: 800vh;
+    height: 811vh;
     background: black;
     position: relative;
     background-size: cover;
     overflow: hidden;
     width: 100vw;
+    .galleryText {
+        margin-top: 15px;
+        font-size: 60px;
+        color: white;
+        font-weight: 200;
+        position: absolute;
+        left: calc(50% - 250px);
+    }
     .gallery {
         list-style: none;
         top: 0;
@@ -138,16 +222,13 @@ body {
         position: absolute;
         height: 100%;
         width: 100%;
+        margin-top: 100px;
         li {
             float: left;
             content: '';
             width: 33.333vw;
             height: 50vh;
             background-size: cover;
-            //background-color: yellow;
         }
     }
 }
-
-
-
