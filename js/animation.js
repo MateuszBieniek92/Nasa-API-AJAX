@@ -2,9 +2,9 @@ $(function () {
 
     ///media queries
 
-    var mobile = window.matchMedia("screen and (max-width: 550px)");
+    var mobile = window.matchMedia("screen and (max-width: 599px)");
     var desktop = window.matchMedia("screen and (min-width: 900px)");
-    var tablet = window.matchMedia("screen and (min-width: 551px) and (max-width: 899px)");
+    var tablet = window.matchMedia("screen and (min-width: 600px) and (max-width: 899px)");
 
     /// nasa parameters
 
@@ -40,23 +40,22 @@ $(function () {
     // scroll btn 
     $(window).on('scroll', function () {
         var pix = $(document).scrollTop();
-        // console.log(pix);
+        //console.log(pix);
         $btnScroll.show();
         if (pix !== 0) {
             $btnScroll.hide();
 
         }
     });
+    
+    function scrollTop() {
 
-    $btnScroll.on('click', function () {
-        $('html, body').animate({
-            scrollTop: 872
-        }, 2000);
-    });
-
-
-
-    //functions 
+            $btnScroll.on('click', function () {
+                $('html, body').animate({
+                    scrollTop: sectionTwoTop.top
+                }, 2000);
+            });
+        }
 
     function randomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -105,53 +104,78 @@ $(function () {
 
     function rightButton() {
         var widthNext = $btnRight.outerWidth();
-        $btnRight
-
-            .on('mouseenter', function () {
-                $(this).stop().animate({
-                    right: 35 + 'px'
-                }, time);
-            })
-            .on('mouseout', function () {
-                $(this).stop().animate({
-                    right: -20 + 'px'
-                }, time);
-            })
-            .on('click', function () {
-                $position += 1;
-                start('next');
-                slide();
-                //console.log($position);
-                $nasaText.addClass('visible').animate({
-                    opacity: 0
-                }, 500);
-            })
+        time = 500;
+        if (mobile.matches) {
+            $btnRight
+                .on('click', function () {
+                    $position += 1;
+                    start('next');
+                    slide();
+                    //console.log($position);
+                    $nasaText.addClass('visible').animate({
+                        opacity: 0
+                    }, time);
+                })
+        } else {
+            $btnRight
+                .on('mouseenter', function () {
+                    $(this).stop().animate({
+                        right: 35 + 'px'
+                    }, time);
+                })
+                .on('mouseout', function () {
+                    $(this).stop().animate({
+                        right: -20 + 'px'
+                    }, time);
+                })
+                .on('click', function () {
+                    $position += 1;
+                    start('next');
+                    slide();
+                    //console.log($position);
+                    $nasaText.addClass('visible').animate({
+                        opacity: 0
+                    }, time);
+                })
+        }
     };
 
     function leftButton() {
-        var widthPrev = $btnLeft.outerWidth();
         time = 500;
-        $btnLeft
-            .on('mouseenter', function () {
-                $(this).stop().animate({
-                    left: 35 + 'px'
-                }, time);
-            })
-            .on('mouseout', function () {
-                $(this).stop().animate({
-                    left: -20 + 'px'
-                }, time);
-            })
-            .on('click', function () {
-                $position += 1;
-                start('next');
-                slide();
-                //console.log($position);
-                $nasaText.addClass('visible').animate({
-                    opacity: 0
-                }, 500);
-            })
-        //console.log(widthPrev);
+        var widthPrev = $btnLeft.outerWidth();
+        if (mobile.matches) {
+            $btnLeft
+                .on('click', function () {
+                    $position += 1;
+                    start('next');
+                    slide();
+                    //console.log($position);
+                    $nasaText.addClass('visible').animate({
+                        opacity: 0
+                    }, time);
+                })
+        } else {
+            $btnLeft
+                .on('mouseenter', function () {
+                    $(this).stop().animate({
+                        left: 35 + 'px'
+                    }, time);
+                })
+                .on('mouseout', function () {
+                    $(this).stop().animate({
+                        left: -20 + 'px'
+                    }, time);
+                })
+                .on('click', function () {
+                    $position += 1;
+                    start('next');
+                    slide();
+                    //console.log($position);
+                    $nasaText.addClass('visible').animate({
+                        opacity: 0
+                    }, 500);
+                })
+        }
     };
 
     /// ajax
@@ -164,7 +188,7 @@ $(function () {
             var $image = $('<img>').attr('src', url);
             $image
                 .on('load', function () {
-                   // console.log('zdjęcie pobrane');
+                    // console.log('zdjęcie pobrane');
                     createImage(type, url);
                     $nasaText.addClass('visible').animate({
                         opacity: 1
@@ -224,7 +248,7 @@ $(function () {
         $.ajax({
             url: marsUrl
         }).done(function (response) {
-           // console.log(response, type);
+            // console.log(response, type);
             var url = response.photos;
             createGalleryImage(response.photos);
             var $image = $('<img>').attr('src', url.img_src);
@@ -259,6 +283,8 @@ $(function () {
         })
     };
 
+    $(window).resize(scrollTop);
+    scrollTop();
     setSectionOneWidth();
     start();
     rightButton();

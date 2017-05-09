@@ -16,7 +16,7 @@ body {
         color: white;
         font-weight: 200;
         position: absolute;
-        top: calc(50% - 50px);
+        top: calc(50% + 20px);
         left: calc(50% - 180px);
         text-align: center;
         @media (min-width: 450px) {
@@ -51,23 +51,31 @@ body {
         }
     }
     .btnLeft {
-        font-size: 10px;
+        font-size: 6px;
         width: 0;
         border-left: 3em solid transparent;
         border-right: 3em solid transparent;
         border-bottom: 2em solid rgba(255, 255, 255, 0.6);
         margin: 30px auto 0;
         top: calc(50% - 50px);
-        left: -20px;
+        left: 35px;
         transform: rotate(90deg);
         position: absolute;
         cursor: pointer;
         span {
             color: white;
-            font-size: 25px;
+            font-size: 20px;
             position: absolute;
             transform: rotate(-90deg);
-            margin: 15px calc(50% - 7px);
+            margin: 5px calc(50% - 6px);
+            @media (min-width: 600px) {
+                font-size: 25px;
+                margin: 15px calc(50% - 7px);
+            }
+        }
+        @media (min-width: 600px) {
+            font-size: 10px;
+            left: -20px;
         }
     }
     .btnLeft:before {
@@ -81,23 +89,31 @@ body {
         border-right: 3em solid transparent;
     }
     .btnRight {
-        font-size: 10px;
+        font-size: 6px;
         width: 0;
         border-left: 3em solid transparent;
         border-right: 3em solid transparent;
         border-bottom: 2em solid rgba(255, 255, 255, 0.6);
         margin: 30px auto 0;
         top: calc(50% - 50px);
-        right: -20px;
+        right: 35px;
         transform: rotate(-90deg);
         position: absolute;
         cursor: pointer;
         span {
             color: white;
-            font-size: 25px;
+            font-size: 20px;
             position: absolute;
             transform: rotate(-90deg);
-            margin: 15px calc(50% - 7px);
+            margin: 5px calc(50% - 6px);
+            @media (min-width: 600px) {
+                font-size: 25px;
+                margin: 15px calc(50% - 7px);
+            }
+        }
+        @media (min-width: 600px) {
+            font-size: 10px;
+            right: -20px;
         }
     }
     .btnRight:before {
@@ -121,19 +137,22 @@ body {
         border-top: 5em solid rgba(255, 255, 255, 0.8);
     }
     .btnBottom {
+      //  display: none;
         font-size: 5px;
         width: 0;
         border-left: 3em solid transparent;
         border-right: 3em solid transparent;
         border-bottom: 2em solid rgba(255, 255, 255, 0.6);
         margin: 30px auto 0;
-        top: 90%;
+        top: 88%;
         left: calc(50% - 15px);
         position: absolute;
         cursor: pointer;
         transform: rotate(0deg);
-        @media (min-width: 450px) {
+        @media (min-width: 900px) {
+            top: 90%;
             left: calc(50% - 20px);
+            //display: inline-block;
         }
     }
     .btnBottom:before {
@@ -217,7 +236,7 @@ body {
             font-size: 60px;
             left: calc(50% - 235px);
         }
-                @media (min-width: 1000px) {
+        @media (min-width: 1000px) {
             font-size: 60px;
             left: calc(50% - 250px);
         }
