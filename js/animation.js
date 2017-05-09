@@ -31,7 +31,7 @@ $(function () {
 
     // section 2
     var $galleryUl = $('.gallery');
-
+    var $sectionTwo = $('.sectionTwo');
 
     console.log($arrayLength);
     console.log('tablica: ' + $array);
@@ -44,7 +44,7 @@ $(function () {
         $btnScroll.show();
         if (pix !== 0) {
             $btnScroll.hide();
-            
+
         }
     });
 
@@ -241,6 +241,8 @@ $(function () {
         });
     }
 
+    /// galery btns 
+
     function createGalleryImage(response) {
         $.each(response, function (index, url) {
             if (mobile.matches) {
@@ -255,7 +257,6 @@ $(function () {
             }
             $galleryUl.append($li);
         })
-
     };
 
     setSectionOneWidth();
