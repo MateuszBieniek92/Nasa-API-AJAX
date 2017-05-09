@@ -1,6 +1,4 @@
-<snippet>
-  <content><![CDATA[
-# ${1:Nasa-API-AJAX}
+# Nasa-API-AJAX
 
 The application presents photogallery downloaded from the NASA server.
 
@@ -13,8 +11,4 @@ The application presents photogallery downloaded from the NASA server.
 
 ## Demo:
 
-[https://mateuszbieniek92.github.io/Nasa-API-AJAX/]
-
-]]></content>
-  <tabTrigger>readme</tabTrigger>
-</snippet>
+https://mateuszbieniek92.github.io/Nasa-API-AJAX/
