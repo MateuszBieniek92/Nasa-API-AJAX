@@ -33,8 +33,8 @@ $(function () {
     var $galleryUl = $('.gallery');
     var $sectionTwo = $('.sectionTwo');
 
-    console.log($arrayLength);
-    console.log('tablica: ' + $array);
+    //console.log($arrayLength);
+    //console.log('tablica: ' + $array);
     $position = 0;
 
     // scroll btn 
@@ -121,7 +121,7 @@ $(function () {
                 $position += 1;
                 start('next');
                 slide();
-                console.log($position);
+                //console.log($position);
                 $nasaText.addClass('visible').animate({
                     opacity: 0
                 }, 500);
@@ -146,12 +146,12 @@ $(function () {
                 $position += 1;
                 start('next');
                 slide();
-                console.log($position);
+                //console.log($position);
                 $nasaText.addClass('visible').animate({
                     opacity: 0
                 }, 500);
             })
-        console.log(widthPrev);
+        //console.log(widthPrev);
     };
 
     /// ajax
@@ -159,12 +159,12 @@ $(function () {
         $.ajax({
             url: nasaUrl + getRandomDate()
         }).done(function (response) {
-            console.log(response, type);
+            //console.log(response, type);
             var url = response.hdurl;
             var $image = $('<img>').attr('src', url);
             $image
                 .on('load', function () {
-                    console.log('zdjęcie pobrane');
+                   // console.log('zdjęcie pobrane');
                     createImage(type, url);
                     $nasaText.addClass('visible').animate({
                         opacity: 1
@@ -206,7 +206,7 @@ $(function () {
         }
 
         var $li = $photoUl.find('li');
-        console.log($li.length);
+        //console.log($li.length);
         if ($position >= $li.length) {
             if ($position < 0) {
                 $position = 0;
@@ -224,7 +224,7 @@ $(function () {
         $.ajax({
             url: marsUrl
         }).done(function (response) {
-            console.log(response, type);
+           // console.log(response, type);
             var url = response.photos;
             createGalleryImage(response.photos);
             var $image = $('<img>').attr('src', url.img_src);
